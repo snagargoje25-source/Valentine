@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Question for You ❤️</title>
+    <style>
+        /* --- CSS STYLING --- */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fff1f2 100%);
+            font-family: 'Segoe UI', 'Comic Sans MS', sans-serif;
+            overflow: hidden; /* Prevents scrolling when button moves */
+            text-align: center;
+            -webkit-tap-highlight-color: transparent; /* Removes blue highlight on tap */
+        }
+
+        /* Animated Background Elements */
+        .bg-heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.4);
+            animation: floatUp 8s linear infinite;
+            z-index: -1;
+            user-select: none;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) scale(0.5); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 75, 110, 0.15);
+            max-width: 90%;
+            width: 400px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            color: #ff4b6e;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        p {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        /* GIF Styling */
+        .gif-container {
+            width: 100%;
+            height: 180px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .gif-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- BUTTONS --- */
+        .btn-group {
+            position: relative;
+            min-height: 60px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+            outline: none;
+        }
+
+        /* "YES" Button */
+        #yesBtn {
+            background-color: #ff4b6e;
+            color: white;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(255, 75, 110, 0.4);
+        }
+        
+        #yesBtn:hover {
+            transform: scale(1.05);
+            background-color: #e63e5d;
+        }
+
+        /* "NO" Button - The Runner */
+        #noBtn {
+            background-color: #f1f1f1;
+            color: #555;
+            border-radius: 50px;
+            position: absolute; /* Allows movement */
+            z-index: 100;
+        }
+
+        /* Input Field Styling */
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ffccd5;
+            border-radius: 15px;
+            font-family: inherit;
+            margin-bottom: 15px;
+            resize: none;
+            box-sizing: border-box;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #ff4b6e;
+        }
+
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            padding: 12px 25px;
+            display: inline-block;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Utility */
+        .hidden { display: none; }
+        .fade-in { animation: fadeIn 0.8s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    </style>
+</head>
+<body>
+
+    <div id="bg-container"></div>
+
+    <div class="container fade-in">
+        
+        <div id="step1">
+            <div class="gif-container">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z5Z3ZnZ3ZnZ3ZnZ3ZnZ3ZnZ3ZnZ3ZnZ3ZnZ3Zn/26BRv0ThflsHCqDrG/giphy.gif" alt="Cute Bear">
+            </div>
+            <h1>Will you be my Valentine? 🌹</h1>
+            <p>I promise to be your favorite annoyance!</p>
+            <div class="btn-group">
+                <button id="yesBtn" onclick="showPrank()">YES, I'd love to! 🥰</button>
+                <button id="noBtn">NO 🙄</button>
+            </div>
+        </div>
+
+        <div id="step2" class="hidden fade-in">
+            <div class="gif-container">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z5Z3ZnZ3ZnZ3ZnZ3ZnZ3ZnZ3ZnZ3ZnZ3ZnZ3Zn/xUA7aN1MTCZx97V1Ic/giphy.gif" alt="Laugh">
+            </div>
+            <h1>HAHA! Gotcha! 🤣</h1>
+            <p>Congratulations, it was just a prank!</p>
+            <p style="font-size: 0.9em; color: #888;">(Okay... but if you actually want to?)</p>
+            
+            <button id="yesBtn" style="background-color: #ff9a9e; width: 100%;" onclick="showFinal()">
+                Wait, I actually want to go! 🥺
+            </button>
+        </div>
+
+        <div id="step3" class="hidden fade-in">
+            <div class="gif-container">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z5Z3ZnZ3ZnZ3ZnZ3ZnZ3ZnZ3ZnZ3ZnZ3ZnZ3Zn/l4pTfx2qLszoacZRS/giphy.gif" alt="Love Hug">
+            </div>
+            
+            <h1>Thank You ❤️</h1>
+            <p style="text-align: justify; font-size: 0.95em; color: #444;">
+                Jokes aside, I am genuinely grateful you chose me. You have no idea how happy this makes me. I promise to treat you with all the respect, laughter, and care you deserve. 🌹
+            </p>
+            
+            <hr style="border: 0; border-top: 1px dashed #ffccd5; margin: 15px 0;">
+
+            <p style="font-size: 1rem;"><strong>What's the vibe? 🤔</strong><br>
+            <span style="font-size: 0.85em; color: #888;">(Street food? Fancy dinner? Movie marathon? World domination?)</span></p>
+
+            <textarea id="datePlan" rows="2" placeholder="Type your cute idea here..."></textarea>
+
+            <a href="#" onclick="sendToWhatsApp()" class="whatsapp-btn">
+                Send Plan to Shubham 💌
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        // --- LOGIC FOR THE "RUNAWAY" BUTTON ---
+        const noBtn = document.getElementById('noBtn');
+
+        // Function to move the button
+        function moveButton() {
+            // Calculate available space
+            const maxWidth = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxHeight = window.innerHeight - noBtn.offsetHeight - 20;
+
+            // Generate random positions
+            const newX = Math.random() * maxWidth;
+            const newY = Math.random() * maxHeight;
+
+            // Apply new position
+            noBtn.style.position = 'fixed'; 
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+        }
+
+        // Trigger move on Mouse Over (Desktop)
+        noBtn.addEventListener('mouseover', moveButton);
+        
+        // Trigger move on Touch Start (Mobile) - "touchstart" happens before "click"
+        noBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault(); // Stop the click from happening
+            moveButton();
+        });
+        
+        // Just in case they manage to click it
+        noBtn.addEventListener('click', moveButton);
+
+        // --- NAVIGATION FLOW ---
+        function showPrank() {
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+        }
+
+        function showFinal() {
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.remove('hidden');
+            createConfetti(); 
+        }
+
+        // --- WHATSAPP SENDING ---
+        function sendToWhatsApp() {
+            const plan = document.getElementById('datePlan').value;
+            const phoneNumber = "918698186828"; // Your number with Country Code 91
+            
+            let message = `Hey Shubham! 🥰 I fell for your prank (and your charm). Yes, I'll be your Valentine! ❤️\n\nHere is my idea for the date:\n"${plan ? plan : 'Surprise me! 😉'}"`;
+            
+            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        // --- BACKGROUND HEARTS ---
+        function createHearts() {
+            const bg = document.getElementById('bg-container');
+            const symbols = ['❤', '💖', '🌹', '✨'];
+            
+            for(let i=0; i<15; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('bg-heart');
+                heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                bg.appendChild(heart);
+            }
+        }
+        createHearts();
+
+        // --- CONFETTI ANIMATION ---
+        function createConfetti() {
+            for(let i=0; i<30; i++) {
+                const conf = document.createElement('div');
+                conf.innerText = '🎉';
+                conf.style.position = 'fixed';
+                conf.style.left = Math.random() * 100 + 'vw';
+                conf.style.top = '-50px';
+                conf.style.zIndex = '9999';
+                conf.style.transition = 'top 3s ease-in';
+                document.body.appendChild(conf);
+
+                // Start animation
+                setTimeout(() => {
+                    conf.style.top = '110vh';
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>
